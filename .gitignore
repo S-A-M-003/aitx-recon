@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pkl
+*.pyc
+.env
+
+# generated data (large files — regenerate with generate_synthetic_data.py)
+data/

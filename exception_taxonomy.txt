@@ -1,0 +1,17 @@
+# AITX Exception Taxonomy
+# Format: CODE | PRIORITY | DESCRIPTION | RESOLUTION_GUIDANCE
+# Lines starting with # are comments. Blank lines are ignored.
+# PRIORITY values: P1 (same day), P2 (next day), P3 (by week end)
+# STL-001 priority is dynamic: P1 if T+1, P2 if T+2 (handled in engine logic)
+# PRC-001 priority is dynamic: P1 if diff > 0.10%, P2 otherwise (handled in engine logic)
+
+MIS-001 | P1 | Trade present in internal but missing from counterparty          | Contact counterparty operations to confirm trade booking and request affirmation.
+MIS-002 | P1 | Trade present in counterparty but missing from internal           | Investigate unrecognised counterparty trade; verify if internal booking is missing.
+DUP-001 | P1 | Duplicate trade_id in counterparty file                           | Identify duplicate booking source; cancel or net the extra leg with counterparty.
+PRC-001 | P1 | Price difference exceeds tolerance (dynamic: P1 > 0.10%)         | Obtain independent price source (Bloomberg/Reuters) and escalate to trading desk.
+STL-001 | P1 | Settlement date mismatch (dynamic: P1 if T+1, P2 if T+2)         | Check settlement calendar for currency holiday impact and notify custodian.
+QTY-001 | P2 | Quantity mismatch exceeds 0.01% tolerance                        | Verify allocation with fund manager and prime broker; check block/allocation split.
+CTY-002 | P2 | ISIN mismatch for same trade                                      | Confirm correct ISIN with issuer CUSIP/ISIN cross-reference; check corporate action.
+QTY-003 | P3 | Partial fill quantity discrepancy                                 | Review partial fill reporting and confirm total executed quantity with execution desk.
+STL-003 | P3 | Settlement instruction detail mismatch                            | Confirm settlement instruction details with custodian and check SWIFT messaging.
+CTY-001 | P3 | Counterparty BIC or legal entity identifier mismatch              | Verify counterparty BIC and legal entity identifier against reference data.
